@@ -1,7 +1,5 @@
 # Amigo Secreto — Challenge de Alura
 
-# Amigo Secreto — Challenge de Alura
-
 Descripción
 -----------
 
