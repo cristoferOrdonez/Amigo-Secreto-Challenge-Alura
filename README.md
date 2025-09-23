@@ -11,6 +11,11 @@ Pequeña aplicación web creada como parte de un challenge de Alura. Está desar
 
 Esta versión incluye mejoras de usabilidad: limpieza del campo de entrada después de agregar, soporte para la tecla Enter y reinicio automático de la lista tras realizar un sorteo.
 
+Demo
+----
+
+Prueba la aplicación en línea: https://cristoferordonez.github.io/Amigo-Secreto-Challenge-Alura/
+
 Contenido del README
 --------------------
 
