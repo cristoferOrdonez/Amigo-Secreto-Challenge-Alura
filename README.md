@@ -1,90 +1,114 @@
 # Amigo Secreto — Challenge de Alura
 
-Pequeña aplicación web creada como parte de un challenge de Alura. Permite agregar nombres, visualizar una lista dinámica y realizar un sorteo aleatorio que muestra el ganador.
+# Amigo Secreto — Challenge de Alura
 
----
+Descripción
+-----------
 
-## Características
+Pequeña aplicación web creada como parte de un challenge de Alura. Está desarrollada con HTML, CSS y JavaScript puro (vanilla). La app permite:
 
-- Agregar nombres a una lista (validación: no se permiten entradas vacías).
-- Visualizar la lista de amigos en tiempo real.
-- Sortear aleatoriamente un nombre de la lista y mostrar el ganador.
-- Limpieza del campo de entrada después de agregar.
-- Soporte para tecla Enter para añadir rápidamente.
-- Después del sorteo, la lista se reinicia (array y vista) para preparar una nueva ronda.
+- Agregar nombres a una lista con validación (no vacíos).
+- Visualizar la lista dinámica de amigos en la página.
+- Realizar un sorteo aleatorio que muestra el ganador en la interfaz.
 
----
+Esta versión incluye mejoras de usabilidad: limpieza del campo de entrada después de agregar, soporte para la tecla Enter y reinicio automático de la lista tras realizar un sorteo.
 
-## Tecnologías
+Contenido del README
+--------------------
 
-- HTML
-- CSS
-- JavaScript (vanilla)
+1. Requisitos
+2. Estructura del proyecto
+3. Instalación y ejecución
+4. Uso (paso a paso)
+5. API y funciones clave
+6. Detalles de implementación
+7. Pruebas rápidas y verificación
+8. Mejoras sugeridas
+9. Créditos y licencia
 
----
+1) Requisitos
+----------------
 
-## Estructura del proyecto
+- Navegador moderno (Chrome, Firefox, Edge, Safari).
+- No hay dependencias externas; basta con abrir `index.html` o servirlo desde un servidor estático.
 
-```
-challenge-amigo-secreto_esp-main/
-├─ app.js          # Lógica: array de amigos, funciones para agregar, renderizar y sortear
-├─ index.html      # Estructura y botones
-├─ style.css       # Estilos (UI)
-└─ assets/         # Imágenes usadas en la UI
-```
+2) Estructura del proyecto
+--------------------------
 
----
+Archivos principales en la raíz del repositorio:
 
-## Uso
+- `index.html` — Estructura de la página y botones
+- `style.css` — Estilos para la UI
+- `app.js` — Lógica: array de amigos, funciones para agregar, renderizar y sortear
+- `assets/` — Imágenes y recursos (íconos)
 
-1. Abrir `index.html` en el navegador (doble clic o servidor local).
-2. Escribir un nombre en el campo y hacer clic en "Añadir" o presionar Enter.
-3. La lista se actualizará mostrando los nombres agregados.
-4. Hacer clic en "Sortear amigo" para elegir un nombre al azar y mostrar el ganador en la página.
-5. Tras el sorteo, la lista se borrará para una nueva ronda.
+3) Instalación y ejecución
+--------------------------
 
----
+Opción A — Abrir directamente
 
-## API de funciones (para desarrolladores)
+1. Navega a la carpeta del proyecto.
+2. Abre `index.html` con el navegador (doble clic o "Abrir con...").
 
-El archivo `app.js` expone dos funciones globales (para los botones con `onclick`):
+Opción B — Servidor local (recomendado para rutas relativas)
 
-- `agregarAmigo()` — Captura el valor del input, valida que no esté vacío, lo añade al array `amigos` y actualiza la lista. Si hay un resultado previo, lo limpia.
-- `sortearAmigo()` — Si el array `amigos` no está vacío, selecciona aleatoriamente un nombre, lo muestra en la sección de resultados y luego limpia el array y la vista.
+1. Instala una extensión como "Live Server" en VS Code o usa un servidor estático sencillo.
+2. Inicia el servidor apuntando a la carpeta del proyecto y abre la URL que te indique.
 
-Variables clave:
+4) Uso (paso a paso)
+--------------------
 
-- `let amigos = []` — Array que contiene los nombres añadidos.
+1. Escribe un nombre en el campo de texto.
+2. Haz clic en "Añadir" o presiona Enter para agregarlo a la lista.
+3. Repite los pasos para ingresar todos los nombres.
+4. Haz clic en "Sortear amigo" para seleccionar aleatoriamente un nombre.
+5. El nombre ganador se mostrará en la sección de resultado; tras el sorteo la lista se reiniciará para una nueva ronda.
 
----
+5) API y funciones clave
+------------------------
 
-## Buenas prácticas y notas de implementación
+En `app.js` se usan las siguientes piezas principales:
 
-- Se utiliza `document.getElementById` para obtener referencias a elementos del DOM.
-- `innerHTML` se emplea para limpiar la lista antes de re-renderizar.
-- La generación aleatoria usa `Math.random()` y `Math.floor()` para obtener un índice válido.
-- Se han añadido comprobaciones y mensajes `alert` para una UX mínima cuando no hay nombres.
-- Se recomienda ejecutar la página en un servidor local (por ejemplo con `Live Server` en VS Code) para evitar problemas con rutas relativas de recursos.
+- `let amigos = []` — Array que almacena los nombres.
+- `agregarAmigo()` — Captura el valor del input, valida que no esté vacío, lo añade al array `amigos`, limpia el campo y actualiza la lista en la UI. Además borra cualquier resultado previo.
+- `renderListaAmigos()` — Recorre `amigos` y genera elementos `<li>` dentro de la lista visible; antes limpia el contenedor con `innerHTML = ''`.
+- `sortearAmigo()` — Verifica que `amigos` no esté vacío; genera un índice con `Math.floor(Math.random() * amigos.length)`, muestra el nombre seleccionado y luego limpia el array y la vista.
 
----
+6) Detalles de implementación
+-----------------------------
 
-## Posibles mejoras (ideas)
+- Validaciones: se comprueba `input.value.trim()` para evitar entradas vacías. Si está vacío, se muestra `alert('Por favor, inserte un nombre.')`.
+- Usabilidad: se añade un listener de `keydown` para añadir con Enter.
+- Accesibilidad: la lista tiene `role="list"` y `aria-live="polite"` para notificar cambios.
+- Seguridad: no se evalúan ni ejecutan entradas de usuario; los nombres se insertan como `textContent`.
 
-- Persistencia local usando `localStorage` para mantener la lista entre recargas.
-- Permitir eliminar nombres individuales de la lista.
-- Evitar duplicados opcionalmente o avisar al usuario.
-- Añadir animaciones y transiciones para añadir/sortear.
-- Validación de nombres (sólo letras, longitud mínima/máxima).
-- Tests unitarios para las funciones puras (por ejemplo, utilidades de sorteo).
+7) Pruebas rápidas y verificación
+--------------------------------
 
----
+Prueba mínima:
 
-## Licencia
+1. Abrir `index.html`.
+2. Añadir 3 nombres.
+3. Verificar que aparezcan en la lista.
+4. Hacer clic en "Sortear amigo" y confirmar que aparece un ganador.
+5. Confirmar que la lista quedó vacía tras el sorteo.
 
-Este repositorio es un proyecto de práctica y puede usarse libremente para aprendizaje y demostraciones.
+8) Mejoras sugeridas
+--------------------
 
----
+- Guardar y cargar la lista desde `localStorage` para persistencia.
+- Añadir la opción de eliminar o editar nombres individuales.
+- Evitar duplicados con una validación adicional.
+- Añadir pruebas unitarias para las funciones de utilidad (por ejemplo, `sorteoRandom(amigos)`).
+- Hacer una versión con asignaciones únicas (cada persona asigna otra sin repetición) para un sorteo tipo "amigo secreto" real.
 
-## Créditos
+9) Créditos y licencia
+----------------------
 
-Challenge provisto por Alura. Implementado como ejercicio de manipulación del DOM y eventos con JavaScript puro.
+Proyecto desarrollado como challenge de Alura. Código libre para uso educativo y adaptaciones.
+
+Contacto
+-------
+
+Si quieres sugerencias, mejoras o una versión con más características, dime y lo implemento.
+
